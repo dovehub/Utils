@@ -11,7 +11,7 @@ __all__ = [
 _logger.remove()
 
 
-def Log(prefix: str):
+def Log(prefix: str) -> _logger:
     basedir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
     # 定位到log日志文件
