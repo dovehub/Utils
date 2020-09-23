@@ -1,6 +1,7 @@
 import os
 import sys
 import copy
+from functools import wraps
 
 from loguru import logger as _logger
 
@@ -29,3 +30,22 @@ def Log(prefix: str) -> _logger:
                rotation="00:00",
                retention="30 days")
     return logger
+
+
+def catch(*a, **kw):
+
+    def _catch(func):  # 解决self.logger作为装饰器的问题
+
+        @wraps(func)
+        def out_wrapper(self, *args, **kwargs):
+            logger = self.logger.opt(depth=1)
+
+            @logger.catch(*a, **kw)
+            def wrapper(self, *args, **kwargs):
+                return func(self, *args, **kwargs)
+
+            return wrapper(self, *args, **kwargs)
+
+        return out_wrapper
+
+    return _catch
