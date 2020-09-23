@@ -22,7 +22,7 @@ def Log(prefix: str) -> _logger:
         os.makedirs(log_path)
 
     file_path = os.path.join(log_path, f'{prefix}.log')
-    format = f"<green>{{time:YYYY-MM-DD HH:mm:ss.SSS}}</green> | <level>{{level: <8}}</level> | <cyan>{{name}}</cyan>:<cyan>{{function}}</cyan>:<cyan>{{line}}</cyan> - <fg #FFC0CB>[{prefix}]</fg #FFC0CB> - <level>{{message}}</level>"
+    format = f"<green>{{time:YYYY-MM-DD HH:mm:ss.SSS}}</green> | <level>{{level: <8}}</level> | <cyan>{{name}}</cyan>:<cyan>{{function}}</cyan>:<cyan>{{line}}</cyan> | <fg #FFC0CB>{prefix}</fg #FFC0CB> - <level>{{message}}</level>"
     logger = copy.deepcopy(_logger)
     logger.add(sys.stdout, format=format)
     logger.add(file_path,
