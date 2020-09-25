@@ -26,6 +26,7 @@ def Log(prefix: str) -> _logger:
     logger = copy.deepcopy(_logger)
     logger.add(sys.stdout, format=format)
     logger.add(file_path,
+               format=format,
                level="WARNING",
                rotation="00:00",
                retention="30 days")
