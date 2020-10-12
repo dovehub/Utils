@@ -15,23 +15,29 @@ _logger.remove()
 
 def Log(prefix: str,
         path: Optional[str] = None,
+        filename: Optional[str] = None,
         format: Optional[str] = None,
         level: Union[str, int] = 'WARNING',
         rotation: str = "00:00",
         retention: str = "30 days",
         enqueue: bool = False) -> _logger:
-    if path is None:
+    if path is None:  # log路径
         basedir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
         # 定位到log日志文件
         path = os.path.join(basedir, 'logs')
 
+    if filename is None:  # log文件名称
+        filename = prefix
+    if not filename.endswith('.log'):
+        filename = filename + '.log'
+
     if not os.path.exists(path):
         os.makedirs(path)
 
-    file_path = os.path.join(path, f'{prefix}.log')
+    file_path = os.path.join(path, filename)
     if format is None:
-        format = f"<green>{{time:YYYY-MM-DD HH:mm:ss.SSS}}</green> | <level>{{level: <8}}</level> | <cyan>{{name}}</cyan>:<cyan>{{function}}</cyan>:<cyan>{{line}}</cyan> | <fg #FFC0CB>{prefix}</fg #FFC0CB> - <level>{{message}}</level>"
+        format = f"<green>{{time:YYYY-MM-DD HH:mm:ss.SSS}}</green> | <level>{{level: <8}}</level> | <cyan>{{name}}</cyan>:<cyan>{{function}}</cyan>:<cyan>{{line}}</cyan> | <fg #FFC0CB>{prefix}</fg #FFC0CB> | <level>{{message}}</level>"
     logger = copy.deepcopy(_logger)
     logger.add(sys.stdout, format=format, enqueue=enqueue)
     logger.add(file_path,
