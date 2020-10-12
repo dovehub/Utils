@@ -21,6 +21,17 @@ def Log(prefix: str,
         rotation: str = "00:00",
         retention: str = "30 days",
         enqueue: bool = False) -> _logger:
+    """
+    prefix: 标识
+    `example: logger = Log('hello')
+    logger.info('hi')`
+    output: 2020-10-12 14:57:37.019 | DEBUG    | __main__:<module>:1 | heelo | hi
+    path: log文件存储路径
+    filename: log文件名，默认为prefix值
+    format: log输出格式
+    level: log文件记录的最低级别
+    rotation retention enqueue 同 loguru
+    """
     if path is None:  # log路径
         basedir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
