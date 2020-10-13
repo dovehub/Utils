@@ -48,7 +48,7 @@ def Log(prefix: str,
 
     file_path = os.path.join(path, filename)
     if format is None:
-        format = f"<green>{{time:YYYY-MM-DD HH:mm:ss.SSS}}</green> | <level>{{level: <8}}</level> | <cyan>{{name}}</cyan>:<cyan>{{function}}</cyan>:<cyan>{{line}}</cyan> | <fg #FFC0CB>{prefix}</fg #FFC0CB> | <level>{{message}}</level>"
+        format = f"<red>[</red> <green>{{time:YYYY-MM-DD HH:mm:ss.SSS}}</green> | <level>{{level: <8}}</level> | <cyan>{{name}}</cyan>:<cyan>{{function}}</cyan>:<cyan>{{line}}</cyan> | <fg #FFC0CB>{prefix}</fg #FFC0CB> <red>]</red> <level>{{message}}</level>"
     logger = copy.deepcopy(_logger)
     logger.add(sys.stdout, format=format, enqueue=enqueue)
     logger.add(file_path,
